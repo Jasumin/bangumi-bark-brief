@@ -1,0 +1,26 @@
+name: Bangumi brief
+
+on:
+  schedule:
+    # 12:00 Asia/Shanghai is 04:00 UTC.
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  push-brief:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Send Bangumi brief
+        env:
+          BANGUMI_TOKEN: ${{ secrets.BANGUMI_TOKEN }}
+          BARK_DEVICE_KEY: ${{ secrets.BARK_DEVICE_KEY }}
+          BARK_ICON_URL: https://raw.githubusercontent.com/Jasumin/mai_amamiya/main/icon.jpg
+        run: python scripts/bangumi_brief.py
