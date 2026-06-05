@@ -2,7 +2,7 @@
 
 Daily Bangumi watching-list brief pushed to iPhone with Bark.
 
-This repository uses GitHub Actions to read the current watching anime list for Bangumi user `jasumin`, combine collection progress with official episode airing data, generate a concise Chinese brief, and send it to iPhone through Bark. It also hosts the custom notification icon used by Bark.
+This repository uses GitHub Actions to read a Bangumi user's current watching anime list, combine collection progress with official episode airing data, generate a concise Chinese brief, and send it to iPhone through Bark. It also hosts the custom notification icon used by Bark.
 
 ## Features
 
@@ -30,7 +30,13 @@ In the repository, go to:
 
 `Settings` -> `Secrets and variables` -> `Actions` -> `New repository secret`
 
-Add these two repository secrets:
+Add these three repository secrets:
+
+```text
+BANGUMI_USER
+```
+
+Your Bangumi username, for example `jasumin`.
 
 ```text
 BANGUMI_TOKEN
@@ -85,6 +91,7 @@ To test locally, set the environment variables and run the script:
 
 ```powershell
 $env:BANGUMI_TOKEN="your_bangumi_token"
+$env:BANGUMI_USER="your_bangumi_username"
 $env:BARK_DEVICE_KEY="your_bark_device_key"
 python scripts\bangumi_brief.py
 ```

@@ -8,7 +8,7 @@ import urllib.request
 from datetime import date, datetime
 
 
-BGMI_USER = os.getenv("BANGUMI_USER", "jasumin")
+BGMI_USER = os.getenv("BANGUMI_USER")
 BGMI_TOKEN = os.getenv("BANGUMI_TOKEN")
 BARK_DEVICE_KEY = os.getenv("BARK_DEVICE_KEY")
 BARK_ICON_URL = os.getenv(
@@ -208,6 +208,7 @@ def push_bark(title, body):
 
 
 def main():
+    require_env("BANGUMI_USER", BGMI_USER)
     require_env("BANGUMI_TOKEN", BGMI_TOKEN)
     require_env("BARK_DEVICE_KEY", BARK_DEVICE_KEY)
     today = date.today()
@@ -220,7 +221,7 @@ def main():
         body = (
             f"Bangumi 在看简报｜{today.isoformat()}\n\n"
             f"生成失败：{exc}\n\n"
-            "请检查 Bangumi Token、GitHub Actions 网络、Bangumi API 状态或 Bark 配置。"
+            "请检查 Bangumi User、Bangumi Token、GitHub Actions 网络、Bangumi API 状态或 Bark 配置。"
         )
         title = f"Bangumi 在看简报失败｜{today.isoformat()}"
         priority_count = 0

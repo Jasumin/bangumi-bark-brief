@@ -20,6 +20,7 @@ jobs:
 
       - name: Send Bangumi brief
         env:
+          BANGUMI_USER: ${{ secrets.BANGUMI_USER }}
           BANGUMI_TOKEN: ${{ secrets.BANGUMI_TOKEN }}
           BARK_DEVICE_KEY: ${{ secrets.BARK_DEVICE_KEY }}
           BARK_ICON_URL: https://raw.githubusercontent.com/Jasumin/mai_amamiya/main/icon.jpg
