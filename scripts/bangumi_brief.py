@@ -13,7 +13,7 @@ BGMI_TOKEN = os.getenv("BANGUMI_TOKEN")
 BARK_DEVICE_KEY = os.getenv("BARK_DEVICE_KEY")
 BARK_ICON_URL = os.getenv(
     "BARK_ICON_URL",
-    "https://raw.githubusercontent.com/Jasumin/mai_amamiya/main/icon.jpg",
+    "https://raw.githubusercontent.com/Jasumin/bangumi-bark-brief/main/icon.jpg",
 )
 
 

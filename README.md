@@ -1,4 +1,4 @@
-# mai_amamiya
+# bangumi-bark-brief
 
 Daily Bangumi watching-list brief pushed to iPhone with Bark.
 
@@ -80,7 +80,7 @@ icon.jpg                             # Custom Bark notification icon
 Current Bark icon URL:
 
 ```text
-https://raw.githubusercontent.com/Jasumin/mai_amamiya/main/icon.jpg
+https://raw.githubusercontent.com/Jasumin/bangumi-bark-brief/main/icon.jpg
 ```
 
 To replace the icon, replace `icon.jpg` in the repository root. A square JPG or PNG under `500 KB` is recommended.
