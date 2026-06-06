@@ -2,8 +2,8 @@ name: Bangumi brief
 
 on:
   schedule:
-    # 12:00 Asia/Shanghai is 04:00 UTC.
-    - cron: "0 4 * * *"
+    # 12:17 Asia/Shanghai is 04:17 UTC. Avoid GitHub's top-of-hour schedule congestion.
+    - cron: "17 4 * * *"
   workflow_dispatch:
 
 jobs:

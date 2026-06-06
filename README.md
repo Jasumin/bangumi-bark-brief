@@ -19,10 +19,10 @@ This repository uses GitHub Actions to read a Bangumi user's current watching an
 GitHub Actions schedules are configured in UTC:
 
 ```yaml
-cron: "0 4 * * *"
+cron: "17 4 * * *"
 ```
 
-This runs every day at `12:00` Asia/Shanghai.
+This runs every day at `12:17` Asia/Shanghai. The minute is intentionally not `00` to avoid GitHub Actions top-of-hour schedule congestion.
 
 ## Required Secrets
 
