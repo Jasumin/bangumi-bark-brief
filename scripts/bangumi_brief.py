@@ -15,6 +15,7 @@ BARK_ICON_URL = os.getenv(
     "BARK_ICON_URL",
     "https://raw.githubusercontent.com/Jasumin/bangumi-bark-brief/main/icon.jpg",
 )
+BARK_SOUND = os.getenv("BARK_SOUND", "shake")
 
 
 class BriefError(Exception):
@@ -200,6 +201,7 @@ def push_bark(title, body):
         "group": "Bangumi",
         "level": "active",
         "icon": BARK_ICON_URL,
+        "sound": BARK_SOUND,
     }
     result = request_json("https://api.day.app/push", data=payload)
     if result.get("code") != 200:

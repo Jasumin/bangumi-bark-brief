@@ -24,4 +24,5 @@ jobs:
           BANGUMI_TOKEN: ${{ secrets.BANGUMI_TOKEN }}
           BARK_DEVICE_KEY: ${{ secrets.BARK_DEVICE_KEY }}
           BARK_ICON_URL: https://raw.githubusercontent.com/Jasumin/bangumi-bark-brief/main/icon.jpg
+          BARK_SOUND: shake
         run: python scripts/bangumi_brief.py

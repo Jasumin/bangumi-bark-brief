@@ -12,6 +12,7 @@ This repository uses GitHub Actions to read a Bangumi user's current watching an
 - Puts already-aired but unwatched episodes in the priority section
 - Sends the brief to iPhone through Bark
 - Uses the custom Bark notification icon `icon.jpg`
+- Uses the Bark notification sound `shake`
 - Supports manual runs from the GitHub Actions page
 
 ## Schedule
@@ -84,6 +85,16 @@ https://raw.githubusercontent.com/Jasumin/bangumi-bark-brief/main/icon.jpg
 ```
 
 To replace the icon, replace `icon.jpg` in the repository root. A square JPG or PNG under `500 KB` is recommended.
+
+## Bark Sound
+
+The workflow sends Bark notifications with:
+
+```text
+sound=shake
+```
+
+To use a different Bark sound, update `BARK_SOUND` in `.github/workflows/bangumi-brief.yml`.
 
 ## Local Test
 
