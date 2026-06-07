@@ -20,10 +20,11 @@ This repository uses GitHub Actions to read a Bangumi user's current watching an
 GitHub Actions schedules are configured in UTC:
 
 ```yaml
-cron: "17 4 * * *"
+cron: "17,47 4 * * *"
+cron: "17 5 * * *"
 ```
 
-This runs every day at `12:17` Asia/Shanghai. The minute is intentionally not `00` to avoid GitHub Actions top-of-hour schedule congestion.
+This attempts to run every day at `12:17`, `12:47`, and `13:17` Asia/Shanghai. Multiple attempts reduce missed GitHub schedule events. The script stores `.state/last_success_date.txt` after a successful Bark push, so later attempts on the same day skip sending and do not duplicate notifications.
 
 ## Required Secrets
 
@@ -74,6 +75,7 @@ Bangumi 在看简报｜YYYY-MM-DD
 .github/workflows/bangumi-brief.yml  # GitHub Actions workflow
 scripts/bangumi_brief.py             # Bangumi reader and Bark push script
 icon.jpg                             # Custom Bark notification icon
+.state/last_success_date.txt         # Last successful push date, updated by GitHub Actions
 ```
 
 ## Icon

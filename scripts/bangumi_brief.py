@@ -5,7 +5,9 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import date, datetime
+from datetime import datetime
+from pathlib import Path
+from zoneinfo import ZoneInfo
 
 
 BGMI_USER = os.getenv("BANGUMI_USER")
@@ -16,6 +18,8 @@ BARK_ICON_URL = os.getenv(
     "https://raw.githubusercontent.com/Jasumin/bangumi-bark-brief/main/icon.jpg",
 )
 BARK_SOUND = os.getenv("BARK_SOUND", "shake")
+LOCAL_TIMEZONE = os.getenv("LOCAL_TIMEZONE", "Asia/Shanghai")
+STATE_FILE = Path(os.getenv("STATE_FILE", ".state/last_success_date.txt"))
 
 
 class BriefError(Exception):
@@ -209,11 +213,35 @@ def push_bark(title, body):
     return result
 
 
+def today_local():
+    return datetime.now(ZoneInfo(LOCAL_TIMEZONE)).date()
+
+
+def already_sent(today):
+    if not STATE_FILE.exists():
+        return False
+    return STATE_FILE.read_text(encoding="utf-8").strip() == today.isoformat()
+
+
+def mark_sent(today):
+    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    STATE_FILE.write_text(today.isoformat() + "\n", encoding="utf-8")
+
+
 def main():
     require_env("BANGUMI_USER", BGMI_USER)
     require_env("BANGUMI_TOKEN", BGMI_TOKEN)
     require_env("BARK_DEVICE_KEY", BARK_DEVICE_KEY)
-    today = date.today()
+    today = today_local()
+    if already_sent(today):
+        print(
+            json.dumps(
+                {"skipped": True, "reason": "already_sent_today", "date": today.isoformat()},
+                ensure_ascii=False,
+            )
+        )
+        return
+
     try:
         items = get_collection()
         rows = build_rows(items, today)
@@ -229,6 +257,7 @@ def main():
         priority_count = 0
 
     result = push_bark(title, body)
+    mark_sent(today)
     print(
         json.dumps(
             {

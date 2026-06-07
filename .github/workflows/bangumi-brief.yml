@@ -2,9 +2,18 @@ name: Bangumi brief
 
 on:
   schedule:
-    # 12:17 Asia/Shanghai is 04:17 UTC. Avoid GitHub's top-of-hour schedule congestion.
-    - cron: "17 4 * * *"
+    # 12:17 and 12:47 Asia/Shanghai. Multiple attempts reduce missed GitHub schedule events.
+    - cron: "17,47 4 * * *"
+    # 13:17 Asia/Shanghai fallback attempt.
+    - cron: "17 5 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bangumi-brief
+  cancel-in-progress: false
 
 jobs:
   push-brief:
@@ -25,4 +34,18 @@ jobs:
           BARK_DEVICE_KEY: ${{ secrets.BARK_DEVICE_KEY }}
           BARK_ICON_URL: https://raw.githubusercontent.com/Jasumin/bangumi-bark-brief/main/icon.jpg
           BARK_SOUND: shake
+          LOCAL_TIMEZONE: Asia/Shanghai
+          STATE_FILE: .state/last_success_date.txt
         run: python scripts/bangumi_brief.py
+
+      - name: Commit send state
+        run: |
+          if [ -z "$(git status --porcelain -- .state/last_success_date.txt)" ]; then
+            echo "No state change to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .state/last_success_date.txt
+          git commit -m "Update Bangumi brief send state"
+          git push
