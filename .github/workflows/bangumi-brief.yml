@@ -2,10 +2,9 @@ name: Bangumi brief
 
 on:
   schedule:
-    # 12:17 and 12:47 Asia/Shanghai. Multiple attempts reduce missed GitHub schedule events.
-    - cron: "17,47 4 * * *"
-    # 13:17 Asia/Shanghai fallback attempt.
-    - cron: "17 5 * * *"
+    # 12:00-14:55 Asia/Shanghai. Frequent attempts reduce missed GitHub schedule events.
+    # The script records the successful send date and skips duplicate sends on the same day.
+    - cron: "*/5 4-6 * * *"
   workflow_dispatch:
 
 permissions:

@@ -20,11 +20,10 @@ This repository uses GitHub Actions to read a Bangumi user's current watching an
 GitHub Actions schedules are configured in UTC:
 
 ```yaml
-cron: "17,47 4 * * *"
-cron: "17 5 * * *"
+cron: "*/5 4-6 * * *"
 ```
 
-This attempts to run every day at `12:17`, `12:47`, and `13:17` Asia/Shanghai. Multiple attempts reduce missed GitHub schedule events. The script stores `.state/last_success_date.txt` after a successful Bark push, so later attempts on the same day skip sending and do not duplicate notifications.
+This attempts to run every 5 minutes from `12:00` to `14:55` Asia/Shanghai. Frequent attempts reduce missed GitHub schedule events. The script stores `.state/last_success_date.txt` after a successful Bark push, so later attempts on the same day skip sending and do not duplicate notifications.
 
 ## Required Secrets
 
